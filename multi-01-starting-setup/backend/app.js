@@ -1,5 +1,9 @@
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config();
+
+const username = process.env.MONGODB_USERNAME;
+const password = process.env.MONGODB_PASSWORD;
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -85,12 +89,10 @@ app.delete('/goals/:id', async (req, res) => {
 
 //mongoose.connect('mongodb://localhost:27017/course-goals',  {
 // mongoose.connect('mongodb://host.docker.internal:27017/course-goals',  {
- mongoose.connect('mongodb://mongodb:27017/course-goals',  {
-      useNewUrlParser: true,
-       useUnifiedTopology: true,
-    })
+
+ mongoose.connect(`mongodb://${username}:${password}@mongodb:27017/course-goals?authSource=admin`)
 .then(()=>{
-  console.log("Connected to MongoDB");
+  console.log("Connected to MongoDB!!");
   app.listen(80);
 })
 .catch((err) => {

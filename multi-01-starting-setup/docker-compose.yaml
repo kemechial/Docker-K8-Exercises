@@ -1,0 +1,37 @@
+services:
+  mongodb:
+    image: 'mongo:4.0.4'
+    volumes:
+      - 'mongodb_data:/data/db'
+    # environment:
+    #   - MONGO_INITDB_ROOT_USERNAME=keemechial
+    #   - MONGO_INITDB_ROOT_PASSWORD=12345
+    env_file:
+      - ./env/mongo.env
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - logs:/app/logs
+      - ./backend:/app   # bind mount for reflecting changes in the code to the container
+      - /app/node_modules #anonymous volume
+    ports:
+      - '80:80'
+    env_file:
+      - ./env/backend.env
+    depends_on:
+      - mongodb
+  frontend:
+    build: ./frontend
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./frontend/src:/app/src
+    stdin_open: true
+    tty: true      #this combination is used for -it flag
+
+volumes:
+  mongodb_data:
+  logs:  #we need to add named volumes here, too
+
