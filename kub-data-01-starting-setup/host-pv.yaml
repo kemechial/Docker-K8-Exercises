@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: host-pv
+spec:
+  capacity:
+    storage: 512Mi
+  volumeMode: Filesystem
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce # Multiple pods can R/W but all on the same node
+  hostPath:
+    path: /data
+    type: DirectoryOrCreate
+
+#yaml for persistent volume
