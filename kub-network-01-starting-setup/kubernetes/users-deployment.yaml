@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users
+  template:
+    metadata:
+      labels:
+        app: users
+    spec:
+      containers:
+      - name: users
+        image: kemechial/kub-demo-users:latest #:latest tag always reevaluates the image
+        env:
+        - name: AUTH_ADDRESS
+          #value: localhost       #this is used when both containers in the same pod
+          value: "10.101.100.116" #this is the service IP address of the auth service olny available inside cluster
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+  
