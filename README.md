@@ -4,7 +4,7 @@ Welcome to the Docker and Kubernetes Exercises repository! This collection of ex
 
 # Branches
 
-**Master** and **Multistage**
+**Master** and **Multistage** (contains a folder vprofile-project/Docker-files/app/multistage with multi-stage Dockerfile example)
 
 ## About
 
